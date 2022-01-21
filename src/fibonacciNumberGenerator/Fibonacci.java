@@ -4,41 +4,44 @@ import java.util.ArrayList;
 
 public class Fibonacci {
 	public static void main(String[] args) {
-		basicFibonacciGenerator();
-		//System.out.println(fibAtPos(4));
+		//basicFibonacciGenerator();
+		System.out.println(fibAtPos(40));
 		//System.out.println(fibAtPos(4, true));
+		System.out.println(fibRecursive(40));
 	}
 
 	/**
-	 * @param n           - position of fibonacci number to return (zero indexed)
+	 * Recursively calculate the fibonacci number at index i of fibonacci sequence (zero-indexed). When index approaches
+	 * 50 run time is very bad, but the idea is there.
+	 * @param i an int - fibonacci sequence index
+	 * @return the number at index i (zero-indexed) of the fibonacci sequence
+	 */
+	public static long fibRecursive(int i) {
+		// establish bases cases
+		if (i == 0) {
+			return 0;
+		}
+		if (i <= 2) {
+			return 1;
+		}
+		// call itself recursively until base cases established
+		return fibRecursive(i - 1) + fibRecursive(i - 2);
+	}
+
+	/**
+	 * @param i           - position of fibonacci number to return (zero indexed)
 	 * @param startAtZero - start at zero? (otherwise start at 1)
 	 * @return the number at the n'th position of fibonacci sequence (zero indexed)
 	 */
-	public static long fibAtPos(int n, boolean startAtZero) {
+	public static long fibAtPos(int i) {
 		long fibonacciNum = -1;
-		long[] preceedingNums = new long[] { (startAtZero) ? 0 : 1, 1 };
-		for (int nth = 1; nth < n; nth++) {
+		long[] preceedingNums = new long[] { 0 , 1 };
+		for (int index = 1; index < i; index++) {
 			fibonacciNum = preceedingNums[0] + preceedingNums[1];
 			preceedingNums[0] = preceedingNums[1];
 			preceedingNums[1] = fibonacciNum;
 		}
 		return fibonacciNum;
-	}
-
-	/**
-	 * @param n - refers to the n'th number in the fibonacci sequence
-	 * @return the number at the n'th posititon in the fibonacci sequence
-	 */
-	public static int fibAtPos(int n) {
-		ArrayList<Integer> nums = new ArrayList<Integer>(47);
-		nums.add(0);
-		nums.add(1);
-		int fib = 0;
-		for (int i = 2; fib >= 0 && i <= n; i++) {
-			fib = nums.get(i - 2) + nums.get(i - 1);
-			nums.add(fib);
-		}
-		return fib;
 	}
 
 	/**
